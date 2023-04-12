@@ -1,11 +1,12 @@
 {
-   "name": "SilentTyping",
+   "name": "PrettyErrorBoundary",
    "version": "1.0.0",
-   "description": "Silences your typing indicator.",
+   "description": "Makes the Discord ErrorBoundary much more pretty and functional. This is my implementation of the Vendetta concept.",
    "authors": [
       {
-         "name": "eternal",
-         "id": "263689920210534400"
+         "name": "Rosie<3",
+         "id": "581573474296791211"
       }
-   ]
+   ],
+   "color": "#ff9caf"
 }

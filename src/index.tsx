@@ -1,29 +1,61 @@
 import { Plugin, registerPlugin } from 'enmity/managers/plugins';
-import { React } from 'enmity/metro/common';
-import { getByProps } from 'enmity/metro';
+import { Constants, React, StyleSheet } from 'enmity/metro/common';
+import { getByName, getByProps } from 'enmity/metro';
 import { create } from 'enmity/patcher';
 import manifest from '../manifest.json';
+import { ScrollView } from 'enmity/components';
+import Header from './components/Header/Header';
+import ShortError from './components/ShortError/ShortError';
+import Actions from './components/Actions/Actions';
 
-import Settings from './components/Settings';
+const ErrorBoundary = getByName("ErrorBoundary");
+const { SafeAreaView } = getByProps("SafeAreaView");
 
-const Typing = getByProps('startTyping');
-const Patcher = create('silent-typing');
+const Patcher = create(manifest.name);
 
-const SilentTyping: Plugin = {
+const styles = StyleSheet.createThemedStyleSheet({
+   container: {
+      backgroundColor: Constants.ThemeColorMap.BACKGROUND_PRIMARY,
+
+      width: "100%",
+      height: "100%",
+
+      alignItems: "center",
+      flex: 1
+   }
+})
+
+const PrettyErrorBoundary: Plugin = {
    ...manifest,
 
    onStart() {
-      Patcher.instead(Typing, 'startTyping', () => { });
-      Patcher.instead(Typing, 'stopTyping', () => { });
+      Patcher.after(ErrorBoundary.prototype, "render", (self) => {
+         if (!self.state.error) return;
+
+         return <SafeAreaView style={styles.container}>
+            <ScrollView>
+               <Header />
+               <ShortError 
+                  error={self.state.error} 
+                  engine={window["HermesInternal"] ? "hermes" : "jsc"} 
+               />
+               <Actions 
+                  setNoError={() => self.setState({ info: null, error: null })} 
+                  error={self.state.error} 
+               />
+            </ScrollView>
+         </SafeAreaView>
+      })
    },
 
    onStop() {
       Patcher.unpatchAll();
    },
 
-   getSettingsPanel({ settings }) {
-      return <Settings settings={settings} />;
+   getSettingsPanel() {
+      return <cute-example></cute-example>
    }
 };
 
-registerPlugin(SilentTyping);
+
+registerPlugin(PrettyErrorBoundary);
