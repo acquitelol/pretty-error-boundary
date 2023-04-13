@@ -53,7 +53,8 @@ const PrettyErrorBoundary: Plugin = {
    },
 
    getSettingsPanel() {
-      return <cute-example></cute-example>
+      // @ts-expect-error
+      return <Cute />
    }
 };
 
