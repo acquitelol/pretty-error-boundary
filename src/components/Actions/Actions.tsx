@@ -18,7 +18,7 @@ const generateCopyActionProps = ({ label, text }: generateCopyActionProps): Acti
 
             setTimeout(() => {
                 setLabel(label);
-            }, 700)
+            }, 1200)
         }
     }
 }
