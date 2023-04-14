@@ -83,5 +83,5 @@ export default StyleSheet.createThemedStyleSheet({
             { translateX: "25%" },
             { translateY: "15%" }
         ]
-    },
-})
+    }
+});

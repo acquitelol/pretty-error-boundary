@@ -31,4 +31,4 @@ export default StyleSheet.createThemedStyleSheet({
   
         textAlign: 'center'
     },
-})
+});

@@ -23,29 +23,35 @@ const styles = StyleSheet.createThemedStyleSheet({
       alignItems: "center",
       flex: 1
    }
-})
+});
 
 const PrettyErrorBoundary: Plugin = {
    ...manifest,
 
    onStart() {
-      Patcher.after(ErrorBoundary.prototype, "render", (self) => {
-         if (!self.state.error) return;
+      function main() {
+         Patcher.after(ErrorBoundary.prototype, "render", (self) => {
+            if (!self.state.error) return;
+   
+            return (
+               <SafeAreaView style={styles.container}>
+                  <ScrollView>
+                     <Header />
+                     <ShortError 
+                        error={self.state.error} 
+                        engine={window["HermesInternal"] ? "hermes" : "jsc"} 
+                     />
+                     <Actions 
+                        setNoError={() => self.setState({ info: null, error: null })} 
+                        error={self.state.error} 
+                     />
+                  </ScrollView>
+               </SafeAreaView>
+            );
+         });
+      };
 
-         return <SafeAreaView style={styles.container}>
-            <ScrollView>
-               <Header />
-               <ShortError 
-                  error={self.state.error} 
-                  engine={window["HermesInternal"] ? "hermes" : "jsc"} 
-               />
-               <Actions 
-                  setNoError={() => self.setState({ info: null, error: null })} 
-                  error={self.state.error} 
-               />
-            </ScrollView>
-         </SafeAreaView>
-      })
+      setTimeout(() => main(), 500);
    },
 
    onStop() {
@@ -53,7 +59,7 @@ const PrettyErrorBoundary: Plugin = {
    },
 
    getSettingsPanel() {
-      return <cute />
+      return <cute />;
    }
 };
 

@@ -11,4 +11,4 @@ export default StyleSheet.createThemedStyleSheet({
         marginTop: 10,
         borderRadius: 15,
     }
-})
+});

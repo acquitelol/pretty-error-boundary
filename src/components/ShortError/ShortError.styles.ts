@@ -28,4 +28,4 @@ export default StyleSheet.createThemedStyleSheet({
         color: ThemeColorMap.HEADER_SECONDARY,
         fontFamily: CODE_SEMIBOLD,
     },
-})
+});
