@@ -12,7 +12,7 @@ const { NativeModules } = getByProps("View", "Text");
 const generateCopyActionProps = ({ label, text }: generateCopyActionProps): ActionProps => {
     return {
         label,
-        onPress: (label, setLabel) => {
+        onPress: (_, setLabel) => {
             Clipboard.setString(text);
             setLabel("Copied!");
 

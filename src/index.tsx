@@ -51,7 +51,7 @@ const PrettyErrorBoundary: Plugin = {
          });
       };
 
-      setTimeout(() => main(), 500);
+      setTimeout(() => main(), 1000);
    },
 
    onStop() {
