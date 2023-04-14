@@ -1,4 +1,4 @@
-export type ReactError = Error & { componentStack: any };
+export type ReactError = Error & { componentStack?: any };
 
 export interface ShortErrorProps {
     error: ReactError;
@@ -19,3 +19,13 @@ export interface ActionsProps {
 export interface InlineActionsProps {
     actions: Array<ActionProps>;
 };
+
+export interface generateCopyActionProps {
+    label: string;
+    text: string;
+}
+
+export interface generateFullStackProps {
+    error: ReactError;
+    debug: any;
+}

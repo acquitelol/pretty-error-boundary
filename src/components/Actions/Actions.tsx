@@ -5,9 +5,34 @@ import Action from "./Action/Action";
 import { reload } from "enmity/api/native";
 import commonStyles from "../common.styles";
 import { getByProps } from "enmity/metro";
-import { ActionsProps, InlineActionsProps } from "../../def";
+import { ActionProps, ActionsProps, InlineActionsProps, generateCopyActionProps, generateFullStackProps } from "../../def";
 
 const { NativeModules } = getByProps("View", "Text");
+
+const generateCopyActionProps = ({ label, text }: generateCopyActionProps): ActionProps => {
+    return {
+        label,
+        onPress: (label, setLabel) => {
+            Clipboard.setString(text);
+            setLabel("Copied!");
+
+            setTimeout(() => {
+                setLabel(label);
+            }, 700)
+        }
+    }
+}
+
+const generateFullStack = ({ error, debug }: generateFullStackProps) => {
+    return `
+    --- JS Stack Trace ---
+    ${error.stack}
+    --- React Stack ---
+    ${error.componentStack}
+    --- Debug Logs ---
+    ${debug}
+    `.trimStart();
+};
 
 const InlineActions = ({ actions }: InlineActionsProps) => {
     return (
@@ -29,38 +54,18 @@ export default ({ setNoError, error }: ActionsProps) => {
             <View style={styles.buttons}>
                 <InlineActions
                     actions={[
-                        {
-                            label: "Copy JS Trace",
-                            onPress: (label, setLabel) => {
-                                Clipboard.setString(error.stack);
-                                setLabel("Copied!");
-
-                                setTimeout(() => {
-                                    setLabel(label);
-                                }, 700)
-                            }
-                        },
-                        {
+                        generateCopyActionProps({ 
+                            label: "Copy JS Trace", 
+                            text: error.stack ?? "No JS Stack Trace"
+                        }),
+                        generateCopyActionProps({
                             label: "Copy React Stack",
-                            onPress: (label, setLabel) => {
-                                Clipboard.setString(error.componentStack);
-                                setLabel("Copied!");
-                                
-                                setTimeout(() => {
-                                    setLabel(label);
-                                }, 700)
-                            }
-                        }
+                            text: error.componentStack ?? "No Component Stack"
+                        })
                     ]}
                 />
-                <Action 
-                    label={"Copy Debug Logs"}
-                    onPress={() => Clipboard.setString(JSON.stringify(debugObject, null, 2))}
-                />
-                <Action 
-                    label={"Copy All"}
-                    onPress={() => Clipboard.setString(error.stack + error.componentStack + JSON.stringify(debugObject, null, 2))}
-                />
+                <Action {...generateCopyActionProps({ label: "Copy Debug Logs", text: JSON.stringify(debugObject, null, 2) })} />
+                <Action {...generateCopyActionProps({ label: "Copy All", text: generateFullStack({ error, debug: JSON.stringify(debugObject, null, 2) }) })} />
                 <Action 
                     label={"Retry Render"}
                     onPress={setNoError}
