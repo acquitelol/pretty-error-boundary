@@ -83,8 +83,18 @@ export default ({ setNoError, error }: ActionsProps) => {
                         })
                     ]}
                 />
-                <Action {...generateCopyActionProps({ label: "Copy Debug Logs", text: JSON.stringify(debugObject, null, 2) })} />
-                <Action {...generateCopyActionProps({ label: "Copy All", text: generateFullStack({ error, debug: JSON.stringify(debugObject, null, 2) }) })} />
+                <Action 
+                    {...generateCopyActionProps({ 
+                        label: "Copy Debug Logs", 
+                        text: JSON.stringify(debugObject, null, 2) 
+                    })} 
+                />
+                <Action 
+                    {...generateCopyActionProps({ 
+                        label: "Copy All", 
+                        text: generateFullStack({ error, debug: JSON.stringify(debugObject, null, 2)}) 
+                    })} 
+                />
                 <Action 
                     label={"Retry Render"}
                     onPress={setNoError}
