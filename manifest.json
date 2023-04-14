@@ -1,6 +1,6 @@
 {
    "name": "PrettyErrorBoundary",
-   "version": "1.0.2",
+   "version": "1.0.3",
    "description": "Makes the Discord ErrorBoundary much more pretty and functional. This is my implementation of the Vendetta concept.",
    "authors": [
       {

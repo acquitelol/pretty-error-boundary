@@ -35,6 +35,7 @@ const generateFullStack = ({ error, debug }: generateFullStackProps) => {
     ----------------------
        ~ React Stack ~
     ----------------------
+    ${error.name}
     ${error.componentStack}
     ----------------------
      ~ End React Stack ~
@@ -46,7 +47,7 @@ const generateFullStack = ({ error, debug }: generateFullStackProps) => {
     ----------------------
       ~ End Debug Logs ~
     ----------------------
-    `.trimStart();
+    `.split('\n').map(line => line.trimStart()).join('\n')
 };
 
 const InlineActions = ({ actions }: InlineActionsProps) => {
