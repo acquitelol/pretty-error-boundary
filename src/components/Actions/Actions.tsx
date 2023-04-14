@@ -25,12 +25,27 @@ const generateCopyActionProps = ({ label, text }: generateCopyActionProps): Acti
 
 const generateFullStack = ({ error, debug }: generateFullStackProps) => {
     return `
-    --- JS Stack Trace ---
+    ----------------------
+      ~ JS Stack Trace ~
+    ----------------------
     ${error.stack}
-    --- React Stack ---
+    ----------------------
+    ~ End JS Stack Trace ~
+    ----------------------
+    ----------------------
+       ~ React Stack ~
+    ----------------------
     ${error.componentStack}
-    --- Debug Logs ---
+    ----------------------
+     ~ End React Stack ~
+    ----------------------
+    ----------------------
+        ~ Debug Logs ~
+    ----------------------
     ${debug}
+    ----------------------
+      ~ End Debug Logs ~
+    ----------------------
     `.trimStart();
 };
 
