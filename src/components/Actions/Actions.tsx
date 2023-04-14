@@ -47,7 +47,10 @@ const generateFullStack = ({ error, debug }: generateFullStackProps) => {
     ----------------------
       ~ End Debug Logs ~
     ----------------------
-    `.split('\n').map(line => line.trim()).join('\n')
+    `.split('\n')
+     .filter(line => line != "")
+     .map(line => line.trim())
+     .join('\n')
 };
 
 const InlineActions = ({ actions }: InlineActionsProps) => {
